@@ -11,7 +11,7 @@
 
 #### 1. 克隆项目
 ``` shell
-$ git clone https://github.com/JiangInk/market_monitor.git
+$ git clone https://market_monitor.git
 ```
 
 #### 2. 创建数据库

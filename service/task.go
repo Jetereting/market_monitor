@@ -1,17 +1,17 @@
 package service
 
 import (
-	"github.com/JiangInk/market_monitor/extend/code"
-	"github.com/JiangInk/market_monitor/models"
 	"github.com/rs/zerolog/log"
+	"market_monitor/extend/code"
+	"market_monitor/models"
 )
 
 // UserService 用户服务层逻辑
-type TaskService struct{
-	TaskID  uint
-	UserID  int
-	Type    string
-	Rules   string
+type TaskService struct {
+	TaskID uint
+	UserID int
+	Type   string
+	Rules  string
 }
 
 // QueryByID 通过任务ID查询任务信息
@@ -29,8 +29,8 @@ func (ts *TaskService) StoreTask() (taskID uint, err error) {
 
 	task := &models.Task{
 		UserID: ts.UserID,
-		Type: ts.Type,
-		Rules: ts.Rules,
+		Type:   ts.Type,
+		Rules:  ts.Rules,
 		Status: "ENABLE",
 	}
 	taskID, err = task.Insert()
@@ -41,7 +41,7 @@ func (ts *TaskService) StoreTask() (taskID uint, err error) {
 func (ts *TaskService) UpdateInfo(taskID uint) (*models.Task, *code.Code) {
 	taskModel := &models.Task{}
 	updateTask, err := taskModel.UpdateOne(taskID, map[string]interface{}{
-		"type": ts.Type,
+		"type":  ts.Type,
 		"rules": ts.Rules,
 	})
 	if err != nil {
@@ -52,7 +52,7 @@ func (ts *TaskService) UpdateInfo(taskID uint) (*models.Task, *code.Code) {
 }
 
 func (ts *TaskService) RemoveTask(taskID uint) error {
-	taskModel := &models.Task {}
+	taskModel := &models.Task{}
 	err := taskModel.DeleteOne(taskID)
 	if err != nil {
 		return err

@@ -3,11 +3,11 @@ package service
 import (
 	"time"
 
-	"github.com/JiangInk/market_monitor/config"
-	"github.com/JiangInk/market_monitor/extend/jwt"
-	"github.com/JiangInk/market_monitor/extend/redis"
-	"github.com/JiangInk/market_monitor/models"
 	goJWT "github.com/dgrijalva/jwt-go"
+	"market_monitor/config"
+	"market_monitor/extend/jwt"
+	"market_monitor/extend/redis"
+	"market_monitor/models"
 )
 
 // AuthService 认证相关
@@ -37,11 +37,11 @@ func (as *AuthService) GenerateToken(user models.User) (string, error) {
 
 	// 设置redis缓存
 	const hourSecs int = 60 * 60
-	redis.Set("TOKEN:"+user.Email, token, config.ServerConf.JWTExpire * hourSecs)
+	redis.Set("TOKEN:"+user.Email, token, config.ServerConf.JWTExpire*hourSecs)
 	return token, nil
 }
 
 // DestroyToken 销毁 Token
 func (as *AuthService) DestroyToken(email string) (bool, error) {
-	return redis.Del("TOKEN:"+email)
+	return redis.Del("TOKEN:" + email)
 }

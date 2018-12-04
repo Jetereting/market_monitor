@@ -1,10 +1,10 @@
 package redis
 
 import (
-	"time"
-	"strconv"
 	"github.com/gomodule/redigo/redis"
-	"github.com/JiangInk/market_monitor/config"
+	"market_monitor/config"
+	"strconv"
+	"time"
 )
 
 var redisConn *redis.Pool
@@ -17,8 +17,8 @@ func GetRedisConn() *redis.Pool {
 // Setup 创建 Redis 连接
 func Setup() error {
 	redisConn = &redis.Pool{
-		MaxIdle: config.RedisConf.MaxIdle,
-		MaxActive: config.RedisConf.MaxActive,
+		MaxIdle:     config.RedisConf.MaxIdle,
+		MaxActive:   config.RedisConf.MaxActive,
 		IdleTimeout: config.RedisConf.IdleTimeout,
 		Dial: func() (redis.Conn, error) {
 			c, err := redis.Dial("tcp", config.RedisConf.Host+":"+strconv.Itoa(config.RedisConf.Port))
@@ -46,7 +46,6 @@ func Setup() error {
 			_, err := c.Do("PING")
 			return err
 		},
-
 	}
 	return nil
 }
@@ -121,4 +120,3 @@ func DelLike(key string) error {
 	}
 	return nil
 }
-

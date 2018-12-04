@@ -1,13 +1,13 @@
 package v1
 
 import (
-	"github.com/JiangInk/market_monitor/extend/code"
-	"github.com/JiangInk/market_monitor/extend/jwt"
-	"github.com/JiangInk/market_monitor/extend/utils"
-	"github.com/JiangInk/market_monitor/service"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/json"
 	"github.com/rs/zerolog/log"
+	"market_monitor/extend/code"
+	"market_monitor/extend/jwt"
+	"market_monitor/extend/utils"
+	"market_monitor/service"
 	"strconv"
 )
 
@@ -71,13 +71,13 @@ func (tc *TaskController) Retrieve(c *gin.Context) {
 }
 
 type TaskCreateRequest struct {
-	TaskType    string  `json:"taskType" binding:"required,oneof= TICKER OTHER"`    // 任务类型
-	Operator    string  `json:"operator" binding:"required,oneof= LT LTE GT GTE"`   // 运算符 LT:"<" LTE:"<=" GT:">" GTE:">="
-	WarnPrice   float64 `json:"warnPrice" binding:"required"`                       // 预警价格
+	TaskType  string  `json:"taskType" binding:"required,oneof= TICKER OTHER"`  // 任务类型
+	Operator  string  `json:"operator" binding:"required,oneof= LT LTE GT GTE"` // 运算符 LT:"<" LTE:"<=" GT:">" GTE:">="
+	WarnPrice float64 `json:"warnPrice" binding:"required"`                     // 预警价格
 }
 
 type TaskRuleParam struct {
-	Operator string
+	Operator  string
 	WarnPrice float64
 }
 
@@ -109,8 +109,8 @@ func (tc *TaskController) Create(c *gin.Context) {
 
 	// 整理数据，userId、type、rule ...
 	rule := &TaskRuleParam{
-	reqBody.Operator,
-	reqBody.WarnPrice,
+		reqBody.Operator,
+		reqBody.WarnPrice,
 	}
 	ruleJson, err := json.Marshal(rule)
 	if err != nil {
@@ -121,8 +121,8 @@ func (tc *TaskController) Create(c *gin.Context) {
 	// 创建任务
 	taskService := service.TaskService{
 		UserID: int(claims.ID),
-		Type: reqBody.TaskType,
-		Rules: string(ruleJson),
+		Type:   reqBody.TaskType,
+		Rules:  string(ruleJson),
 	}
 	taskID, err := taskService.StoreTask()
 	if err != nil {
@@ -173,7 +173,7 @@ func (tc *TaskController) Update(c *gin.Context) {
 		utils.ResponseFormat(c, code.RequestParamError, nil)
 		return
 	}
-	rule := &TaskRuleParam {
+	rule := &TaskRuleParam{
 		reqBody.Operator,
 		reqBody.WarnPrice,
 	}
@@ -185,8 +185,8 @@ func (tc *TaskController) Update(c *gin.Context) {
 
 	taskService := service.TaskService{
 		UserID: int(claims.ID),
-		Type: reqBody.TaskType,
-		Rules: string(ruleJson),
+		Type:   reqBody.TaskType,
+		Rules:  string(ruleJson),
 	}
 
 	task, msgCode := taskService.UpdateInfo(uint(u64Id))

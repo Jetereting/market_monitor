@@ -2,11 +2,11 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/JiangInk/market_monitor/extend/utils"
-	"github.com/JiangInk/market_monitor/extend/code"
-	"github.com/JiangInk/market_monitor/extend/jwt"
-	"github.com/JiangInk/market_monitor/extend/redis"
 	"github.com/rs/zerolog/log"
+	"market_monitor/extend/code"
+	"market_monitor/extend/jwt"
+	"market_monitor/extend/redis"
+	"market_monitor/extend/utils"
 )
 
 // JWTAuth Token 认证中间件
@@ -33,7 +33,7 @@ func JWTAuth() gin.HandlerFunc {
 		}
 
 		// 获取缓存中的Token信息
-		tokenCache, err := redis.Get("TOKEN:"+claims.Email)
+		tokenCache, err := redis.Get("TOKEN:" + claims.Email)
 		if err != nil {
 			log.Error().Msgf("jwt auth redis get: %v", err.Error())
 			utils.ResponseFormat(c, code.ServiceInsideError, nil)

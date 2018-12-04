@@ -1,12 +1,12 @@
 package v1
 
 import (
-	"github.com/JiangInk/market_monitor/service"
-	"github.com/JiangInk/market_monitor/extend/utils"
-	"github.com/JiangInk/market_monitor/extend/code"
-	"github.com/JiangInk/market_monitor/extend/jwt"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
+	"market_monitor/extend/code"
+	"market_monitor/extend/jwt"
+	"market_monitor/extend/utils"
+	"market_monitor/service"
 )
 
 // AuthController 用户控制器
@@ -47,7 +47,7 @@ func (ac AuthController) Signup(c *gin.Context) {
 	}
 
 	userService := service.UserService{
-		Email: reqBody.Email,
+		Email:    reqBody.Email,
 		Password: reqBody.ConfirmPass,
 	}
 	userID, err := userService.StoreUser(reqBody.Email, reqBody.ConfirmPass)
@@ -58,12 +58,12 @@ func (ac AuthController) Signup(c *gin.Context) {
 	}
 	log.Info().Msgf("signup controller result userId: %d", userID)
 
-	utils.ResponseFormat(c, code.Success, map[string]uint{ "userId": userID })
+	utils.ResponseFormat(c, code.Success, map[string]uint{"userId": userID})
 	return
 }
 
 type SigninRequest struct {
-	Email string `json:"email" binding:"required,email"`
+	Email    string `json:"email" binding:"required,email"`
 	Password string `json:"password" binding:"required,max=20"`
 }
 
@@ -114,10 +114,10 @@ func (ac AuthController) Signin(c *gin.Context) {
 	}
 
 	utils.ResponseFormat(c, code.Success, map[string]interface{}{
-		"userId": user.ID,
+		"userId":   user.ID,
 		"userName": user.UserName,
-		"email": user.Email,
-		"token": token,
+		"email":    user.Email,
+		"token":    token,
 	})
 	return
 }

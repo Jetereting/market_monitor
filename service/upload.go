@@ -2,16 +2,16 @@ package service
 
 import (
 	"fmt"
-	"github.com/JiangInk/market_monitor/extend/utils"
 	"github.com/rs/zerolog/log"
 	"io/ioutil"
+	"market_monitor/extend/utils"
 	"mime/multipart"
 	"os"
 	"path"
 	"strings"
 )
 
-type UploadService struct {}
+type UploadService struct{}
 
 // GetImgPath 获取图片相对目录
 func (us *UploadService) GetImgPath() string {
@@ -22,7 +22,7 @@ func (us *UploadService) GetImgPath() string {
 // GetImgFullPath 获取图片完整目录
 func (us *UploadService) GetImgFullPath() string {
 	// todo conf
-	return "public/"+"upload/img/"
+	return "public/" + "upload/img/"
 }
 
 // GetImgName 获取图片名称
@@ -36,14 +36,14 @@ func (us *UploadService) GetImgName(name string) string {
 // GetImgFullUrl 获取图片完整URL
 func (us *UploadService) GetImgFullUrl(name string) string {
 	// todo conf
-	return "http://localhost:8000/"+"upload/img/"+name
+	return "http://localhost:8000/" + "upload/img/" + name
 }
 
 // CheckImgExt 检查图片后缀是否满足要求
 func (us *UploadService) CheckImgExt(fileName string) bool {
 	ext := path.Ext(fileName)
 	// todo conf
-	for _, allowExt := range []string{".jpg",".jpeg",".png"} {
+	for _, allowExt := range []string{".jpg", ".jpeg", ".png"} {
 		if strings.ToUpper(allowExt) == strings.ToUpper(ext) {
 			return true
 		}
@@ -78,7 +78,7 @@ func (us *UploadService) CheckImgPath(path string) error {
 	}
 	if isExist == false {
 		// 若路径不存在，则创建
-		err := os.MkdirAll(dir + "/" + path, os.ModePerm)
+		err := os.MkdirAll(dir+"/"+path, os.ModePerm)
 		if err != nil {
 			return fmt.Errorf("os.MkdirAll err: %v", err)
 		}

@@ -1,12 +1,12 @@
 package v1
 
 import (
-	"github.com/JiangInk/market_monitor/extend/code"
-	"github.com/JiangInk/market_monitor/extend/jwt"
-	"github.com/JiangInk/market_monitor/extend/utils"
-	"github.com/JiangInk/market_monitor/service"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
+	"market_monitor/extend/code"
+	"market_monitor/extend/jwt"
+	"market_monitor/extend/utils"
+	"market_monitor/service"
 )
 
 // UserController 用户控制器
@@ -25,7 +25,7 @@ func (sc UserController) Retrieve(c *gin.Context) {
 
 	claims := c.MustGet("claims").(*jwt.CustomClaims)
 	if claims != nil {
-		utils.ResponseFormat(c, code.Success, map[string]interface{}{ 
+		utils.ResponseFormat(c, code.Success, map[string]interface{}{
 			"data": claims,
 		})
 		return
@@ -61,7 +61,7 @@ func (sc UserController) AlterName(c *gin.Context) {
 		return
 	}
 	// 修改用户名称
-	userService := service.UserService{ UserID: claims.ID }
+	userService := service.UserService{UserID: claims.ID}
 	updateUser, msgCode := userService.UpdateName(reqBody.Name)
 	if msgCode != nil {
 		utils.ResponseFormat(c, msgCode, nil)
@@ -69,9 +69,9 @@ func (sc UserController) AlterName(c *gin.Context) {
 	}
 	log.Debug().Msgf("update user result: %v", updateUser)
 	utils.ResponseFormat(c, code.Success, map[string]interface{}{
-		"userId": updateUser.ID,
+		"userId":   updateUser.ID,
 		"userName": updateUser.UserName,
-		"email": updateUser.Email,
+		"email":    updateUser.Email,
 	})
 }
 
@@ -105,16 +105,16 @@ func (sc UserController) AlterPass(c *gin.Context) {
 		return
 	}
 	// 更新用户密码
-	userService := service.UserService{ Email:claims.Email }
+	userService := service.UserService{Email: claims.Email}
 	updateUser, msgCode := userService.UpdatePass(reqBody.OldPass, reqBody.NewPass)
 	if msgCode != nil {
 		utils.ResponseFormat(c, msgCode, nil)
 		return
 	}
 	utils.ResponseFormat(c, code.Success, map[string]interface{}{
-		"userId": updateUser.ID,
+		"userId":   updateUser.ID,
 		"userName": updateUser.UserName,
-		"email": updateUser.Email,
+		"email":    updateUser.Email,
 	})
 }
 
@@ -175,8 +175,8 @@ func (sc UserController) AlterAvatar(c *gin.Context) {
 	}
 
 	// 更新用户头像
-	userService := service.UserService{ UserID: claims.ID }
-	updateUser, msgCode := userService.UpdateAvatar(uploadService.GetImgPath()+avatarName)
+	userService := service.UserService{UserID: claims.ID}
+	updateUser, msgCode := userService.UpdateAvatar(uploadService.GetImgPath() + avatarName)
 	if msgCode != nil {
 		utils.ResponseFormat(c, msgCode, nil)
 		return

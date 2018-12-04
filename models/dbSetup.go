@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/JiangInk/market_monitor/config"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql" // mysql
+	"market_monitor/config"
 )
 
 // DB 当前数据库连接
@@ -35,7 +35,7 @@ func Setup() {
 	gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
 		return config.DBConf.TablePrefix + defaultTableName
 	}
-	
+
 	DB.LogMode(config.DBConf.Debug)
 	DB.SingularTable(true)
 	DB.DB().SetMaxIdleConns(10)

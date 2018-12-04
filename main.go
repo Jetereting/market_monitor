@@ -1,14 +1,14 @@
 package main
 
 import (
-	"github.com/JiangInk/market_monitor/schedule"
+	"market_monitor/schedule"
 	"strconv"
 
-	"github.com/JiangInk/market_monitor/config"
-	"github.com/JiangInk/market_monitor/extend/logger"
-	"github.com/JiangInk/market_monitor/extend/redis"
-	"github.com/JiangInk/market_monitor/models"
-	"github.com/JiangInk/market_monitor/router"
+	"market_monitor/config"
+	"market_monitor/extend/logger"
+	"market_monitor/extend/redis"
+	"market_monitor/models"
+	"market_monitor/router"
 )
 
 // @title Market Monitor API

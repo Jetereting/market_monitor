@@ -4,9 +4,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/JiangInk/market_monitor/config"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
+	"market_monitor/config"
 )
 
 // Setup 日志初始化设置

@@ -1,13 +1,12 @@
 package schedule
 
 import (
-
 	"bytes"
-	"html/template"
-	"github.com/JiangInk/market_monitor/extend/api"
-	"github.com/JiangInk/market_monitor/extend/email"
 	_ "github.com/robfig/cron"
 	"github.com/rs/zerolog/log"
+	"html/template"
+	"market_monitor/extend/api"
+	"market_monitor/extend/email"
 )
 
 // 行情提醒
@@ -32,13 +31,13 @@ func earlyWarnCheck(tick api.Ticker) {
 	// 3. 达到预警条件的任务，批量发送邮件
 
 	type data struct {
-		UserName    string
-		Email       string
+		UserName string
+		Email    string
 	}
 
 	type rule struct {
-		Operator    string  `json:"operator"`   // 运算符 LT:"<" LTE:"<=" GT:">" GTE:">="
-		WarnPrice   float64 `json:"warnPrice"`  // 预警价格
+		Operator  string  `json:"operator"`  // 运算符 LT:"<" LTE:"<=" GT:">" GTE:">="
+		WarnPrice float64 `json:"warnPrice"` // 预警价格
 
 	}
 
@@ -69,7 +68,6 @@ func sendWarnNotify(tick api.Ticker) bool {
 	return true
 }
 
-
 type EmailNotifyData struct {
 	Title     string
 	UserName  string
@@ -77,6 +75,7 @@ type EmailNotifyData struct {
 	LastPrice string
 	TickData  api.Ticker
 }
+
 // 生成邮件模板
 func genTemplate(tick api.Ticker) (string, error) {
 	tmpl, err := template.ParseFiles("templates/email.html")
@@ -84,7 +83,7 @@ func genTemplate(tick api.Ticker) (string, error) {
 		log.Error().Msg(err.Error())
 		return "", err
 	}
-	data := EmailNotifyData {
+	data := EmailNotifyData{
 		Title:     "行情预警提醒！",
 		UserName:  "Jason Marz",
 		Token:     "EOS",

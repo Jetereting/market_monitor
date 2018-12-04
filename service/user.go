@@ -1,18 +1,18 @@
 package service
 
 import (
-	"github.com/JiangInk/market_monitor/extend/code"
-	"github.com/JiangInk/market_monitor/extend/utils"
-	"github.com/JiangInk/market_monitor/models"
 	"github.com/rs/zerolog/log"
+	"market_monitor/extend/code"
+	"market_monitor/extend/utils"
+	"market_monitor/models"
 )
 
 // UserService 用户服务层逻辑
-type UserService struct{
-	UserID		uint
-	Email		string
-	Name		string
-	Password	string
+type UserService struct {
+	UserID   uint
+	Email    string
+	Name     string
+	Password string
 }
 
 // QueryByEmail 通过邮箱查询用户信息
@@ -103,13 +103,13 @@ func (us *UserService) UpdatePass(oldPass, newPass string) (*models.User, *code.
 	}
 
 	// 2. 为参数中原密码明文做hash,然后与用户密码hash进行校验对比
-	oldPassHash := utils.MakeSha1(us.Email+oldPass)
+	oldPassHash := utils.MakeSha1(us.Email + oldPass)
 	if oldPassHash != user.Password {
 		return nil, code.AccountPassUnmatch
 	}
 	// 3. 校验通过，则更新用户密码
 	updateUser, err := userModel.UpdateOne(user.ID, map[string]interface{}{
-		"password": utils.MakeSha1(us.Email+newPass),
+		"password": utils.MakeSha1(us.Email + newPass),
 	})
 	if err != nil {
 		log.Error().Msg(err.Error())
@@ -130,7 +130,6 @@ func (us *UserService) UpdateAvatar(avatar string) (*models.User, *code.Code) {
 	}
 	return updateUser, nil
 }
-
 
 // DestroyUser 删除用户
 func (us *UserService) DestroyUser(userID uint) error {
